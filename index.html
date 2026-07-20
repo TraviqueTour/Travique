@@ -1,0 +1,408 @@
+
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Travique - Discover Chiang Mai</title>
+<style>
+:root{--green:#1f3d1e;--green2:#2e5a2b;--cream:#f4efe4;--gold:#b7791f;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Helvetica,Arial,sans-serif;color:var(--green);background:#0d1a0c;
+ scroll-snap-type:y mandatory;overflow-x:hidden}
+html{scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;
+ align-items:center;padding:14px 22px;background:linear-gradient(#0d1a0ccc,transparent);color:#fff}
+.brand{font-size:22px;letter-spacing:6px;font-weight:600}
+.topbar a{color:#fff;text-decoration:none;font-size:13px;letter-spacing:2px;opacity:.85}
+.topbar a:hover{opacity:1}
+.slide{position:relative;height:100vh;scroll-snap-align:start;display:flex;align-items:flex-end;
+ justify-content:center;overflow:hidden}
+.slide img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.slide .veil{position:absolute;inset:0;background:linear-gradient(transparent 38%,#061105f2 100%)}
+.card{position:relative;z-index:2;width:min(940px,92%);margin-bottom:6vh;
+ background:rgba(244,239,228,.95);border-radius:18px;padding:22px 26px;
+ box-shadow:0 18px 50px #000a;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.card h2{font-size:26px;line-height:1.05}
+.card .tag{color:var(--green2);font-style:italic;margin:4px 0 10px;font-size:15px}
+.meta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#444;margin-bottom:8px}
+.meta b{color:var(--green)}
+.price{font-size:30px;font-weight:700;color:var(--gold)}
+.price small{font-size:13px;color:#666;font-weight:400}
+.hl{flex:1 1 340px;font-size:13px;color:#3a3a3a;columns:2;column-gap:20px}
+.hl div{margin-bottom:4px;break-inside:avoid}.hl div:before{content:'\2713  ';color:var(--green2)}
+.left{flex:1 1 240px}
+.book-btn{margin-top:12px;background:var(--green);color:#fff;border:none;border-radius:30px;
+ padding:12px 26px;font-size:15px;letter-spacing:1px;cursor:pointer;transition:.15s}
+.book-btn:hover{background:var(--green2);transform:translateY(-1px)}
+.hero{align-items:center}.hero .htext{position:relative;z-index:2;text-align:center;color:#fff}
+.hero h1{font-size:15px;letter-spacing:8px}.hero .big{font-size:64px;letter-spacing:2px;margin:6px 0;
+ font-family:Georgia,'Times New Roman',serif}
+.hero p{opacity:.9;margin-bottom:18px}
+.scrolldown{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#fff;font-size:12px;
+ letter-spacing:3px;z-index:3;animation:bob 1.8s infinite}
+@keyframes bob{50%{transform:translate(-50%,8px)}}
+.modal{position:fixed;inset:0;background:#000a;display:none;z-index:100;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.sheet{background:#fff;border-radius:18px;width:min(460px,96%);max-height:92vh;overflow:auto;padding:26px}
+.sheet h3{color:var(--green);font-size:22px;margin-bottom:2px}
+.sheet .sub{color:#777;font-size:13px;margin-bottom:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;color:#555;margin-bottom:4px;letter-spacing:.3px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid #cfc9bb;
+ border-radius:10px;font-size:14px;font-family:inherit}
+.row{display:flex;gap:10px}.row .field{flex:1}
+.est{background:var(--cream);border-radius:10px;padding:10px 14px;font-size:14px;margin:6px 0 14px}
+.est b{color:var(--gold);font-size:18px}
+.submit{width:100%;background:var(--green);color:#fff;border:none;border-radius:30px;padding:13px;
+ font-size:16px;cursor:pointer;letter-spacing:1px}.submit:hover{background:var(--green2)}
+.x{float:right;font-size:22px;color:#999;cursor:pointer;line-height:1}
+.ok{text-align:center;padding:10px 0}.ok .check{font-size:52px}
+.err{color:#b00;font-size:13px;margin-top:8px;display:none}
+.footer{background:var(--green);color:#e8e2d2;text-align:center;padding:34px;scroll-snap-align:start}
+.footer .b{font-size:26px;letter-spacing:8px;margin-bottom:6px}
+</style></head><body>
+
+<div class="topbar">
+  <div class="brand">TRAVIQUE</div>
+  <div><a href="#tours">TOURS</a> </div>
+</div>
+
+<section class="slide hero">
+  <img class="bg" src="/static/img/page01.jpg" alt="">
+  <div class="veil"></div>
+  <div class="htext">
+    <h1>DISCOVER</h1>
+    <div class="big">Chiang Mai</div>
+    <p>Elephants &middot; Temples &middot; Waterfalls &middot; Thai Cooking &amp; more</p>
+    <button class="book-btn" onclick="document.getElementById('tours').scrollIntoView()">EXPLORE TOURS</button>
+  </div>
+  <div class="scrolldown">SCROLL &#9662;</div>
+</section>
+
+<div id="tours"></div>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page04.jpg" alt="Elephant Sanctuary">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Elephant Sanctuary</h2>
+      <div class="tag">Meet Chiang Mai's Gentle Giants</div>
+      <div class="meta"><span><b>Half Day</b></span>
+        <span>Kids 3-7: <b>700 THB</b></span></div>
+      <div class="price">1,300 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('elephant-half')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Feed elephants</div><div>Mud baths with elephants</div><div>Walk through nature</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pick up & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page05.jpg" alt="Elephants & Sticky Waterfall">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Elephants & Sticky Waterfall</h2>
+      <div class="tag">Giants & Waterfalls</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,100 THB</b></span></div>
+      <div class="price">1,700 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('elephant-waterfall')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Feed elephants</div><div>Mud baths with elephants</div><div>Walk & climb the cascading Sticky Waterfall</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pick up & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page06.jpg" alt="Chiang Rai — White Temple">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Chiang Rai — White Temple</h2>
+      <div class="tag">White Temple, Blue Temple, Black Museum & Hot Springs</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,200 THB</b></span></div>
+      <div class="price">1,500 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('chiang-rai')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Visit the Hot Springs on the way</div><div>Famous White Temple</div><div>Visit the Blue Temple</div><div>Tour inside the Black Museum</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pickup & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page07.jpg" alt="Full Chiang Rai">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Full Chiang Rai</h2>
+      <div class="tag">Temples, Karen Village, Boat Ride & Golden Triangle</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,550 THB</b></span></div>
+      <div class="price">2,000 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('chiang-rai-full')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>White Temple</div><div>Black Museum</div><div>Blue Temple</div><div>Karen Village</div><div>Boat ride</div><div>Hot Springs</div><div>Golden Triangle</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pickup & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page08.jpg" alt="Doi Suthep & Hmong Village">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Doi Suthep & Hmong Village</h2>
+      <div class="tag">Sacred temple & mountain viewpoint</div>
+      <div class="meta"><span><b>Half Day</b></span>
+        <span>Kids 3-7: <b>850 THB</b></span></div>
+      <div class="price">1,200 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('doi-suthep')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Visit Wat Phra That Temple</div><div>Doi Suthep Viewpoint</div><div>Experience Hmong Village</div><div>English speaking guide</div><div>Hotel pickup & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page09.jpg" alt="Doi Inthanon National Park">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Doi Inthanon National Park</h2>
+      <div class="tag">Visit Thailand's Highest Peak</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,100 THB</b></span></div>
+      <div class="price">1,500 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('doi-inthanon')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Explore lush mountain landscapes</div><div>Trek Kew Mae Pan nature trail & 2 Waterfalls</div><div>Scenic King & Queen's Pagoda viewpoints</div><div>Traditional Hmong Village</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pickup & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page10.jpg" alt="Sacred Journey — 3 Temples">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Sacred Journey — 3 Temples</h2>
+      <div class="tag">Monk blessings & cultural insights</div>
+      <div class="meta"><span><b>Half Day</b></span>
+        </div>
+      <div class="price">1,990 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('sacred-3-temples')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Visit 3 Famous Temples</div><div>Monk Blessing Experience</div><div>Stories & Cultural Insights</div><div>Temple Offerings Included</div><div>English Guided Tour</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page11.jpg" alt="5 Temples Blessings">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>5 Temples Blessings</h2>
+      <div class="tag">Love · Health · Wealth · Career</div>
+      <div class="meta"><span><b>Half Day</b></span>
+        </div>
+      <div class="price">3,490 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('five-temples')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Visit 5 Famous Temples in the Old Town</div><div>Monk Blessing Experience</div><div>Historical & Cultural Insights</div><div>Temple Offerings Included</div><div>English Guided Tour</div><div>Lunch Included</div><div>Hidden Local Stops</div><div>Complimentary Spiritual Souvenir</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page12.jpg" alt="Bamboo Rafting & Elephants">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Bamboo Rafting & Elephants</h2>
+      <div class="tag">Trekking, waterfall & water rafting</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,300 THB</b></span></div>
+      <div class="price">1,800 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('bamboo-rafting')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Bamboo water rafting</div><div>Feed elephants</div><div>Mud baths with elephants</div><div>Jungle trekking with waterfall</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pick up & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page13.jpg" alt="Full Day Nature">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Full Day Nature</h2>
+      <div class="tag">Rafting, Sticky Waterfall & Elephants</div>
+      <div class="meta"><span><b>Full Day</b></span>
+        <span>Kids 3-7: <b>1,300 THB</b></span></div>
+      <div class="price">2,000 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('full-day-nature')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Bamboo water rafting</div><div>Feed elephants</div><div>Mud baths with elephants</div><div>Sticky Waterfall view & climb</div><div>Lunch included</div><div>English speaking guide</div><div>Hotel pick up & drop off</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page14.jpg" alt="Thai Cooking Class">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Thai Cooking Class</h2>
+      <div class="tag">Learn authentic recipes</div>
+      <div class="meta"><span><b>Half Day</b></span>
+        </div>
+      <div class="price">900 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('cooking-class')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Explore local market</div><div>Pick fresh ingredients from organic farm</div><div>Cook 4 authentic Thai dishes</div><div>Enjoy your creations</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page15.jpg" alt="Sip Thailand — Wine Experience">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Sip Thailand — Wine Experience</h2>
+      <div class="tag">Five wines & five curated Thai pairings</div>
+      <div class="meta"><span><b>~2 Hours</b></span>
+        </div>
+      <div class="price">3,500 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('sip-thailand')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>5 selected wines</div><div>5 signature Thai bites</div><div>Guided pairing experience</div><div>Complimentary transport</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <img class="bg" src="/static/img/page16.jpg" alt="Cocktail Experience">
+  <div class="veil"></div>
+  <div class="card">
+    <div class="left">
+      <h2>Cocktail Experience</h2>
+      <div class="tag">Shake · Sip · Create — hands-on mixology</div>
+      <div class="meta"><span><b>45 - 90 mins</b></span>
+        </div>
+      <div class="price">1,490 THB <small>/ adult</small></div>
+      <button class="book-btn" onclick="openBook('cocktail-experience')">Book this tour</button>
+    </div>
+    <div class="hl">
+      <div>Welcome drink on arrival</div><div>Learn classic cocktails</div><div>Create your own signature cocktail</div><div>10% off drinks after class</div><div>Group photos & videos</div><div>All equipment & ingredients provided</div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="b">TRAVIQUE</div>
+  <div>Ready for your Chiang Mai adventure? Book above &mdash; we'll email your confirmation.</div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <span class="x" onclick="closeBook()">&times;</span>
+    <div id="form-wrap">
+      <h3 id="m-title"></h3>
+      <div class="sub" id="m-sub"></div>
+      <div class="field"><label>Full name *</label><input id="f-name" placeholder="Your name"></div>
+      <div class="field"><label>Email *</label><input id="f-email" type="email" placeholder="you@email.com"></div>
+      <div class="field"><label>Phone / WhatsApp</label><input id="f-phone" placeholder="Optional"></div>
+      <div class="row">
+        <div class="field"><label>Tour date *</label><input id="f-date" type="date" min="2026-07-20"></div>
+        <div class="field"><label>Time slot *</label><select id="f-slot"></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Adults</label><input id="f-adults" type="number" min="1" value="1"></div>
+        <div class="field"><label>Children (3-7)</label><input id="f-children" type="number" min="0" value="0"></div>
+      </div>
+      <div class="field"><label>Notes (hotel, pickup, requests)</label><textarea id="f-notes" rows="2"></textarea></div>
+      <div class="est">Estimated total: <b id="f-total">-</b></div>
+      <button class="submit" onclick="submitBook()">Confirm booking</button>
+      <div class="err" id="f-err"></div>
+    </div>
+    <div id="done" style="display:none" class="ok">
+      <div class="check">&#9989;</div>
+      <h3>Booking received!</h3>
+      <div class="sub" id="done-msg"></div>
+      <button class="submit" style="margin-top:14px" onclick="closeBook()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOURS = [{"id": "elephant-half", "img": "page04.jpg", "title": "Elephant Sanctuary", "tagline": "Meet Chiang Mai's Gentle Giants", "duration": "Half Day", "price": 1300, "kid_price": 700, "slots": ["Morning (8:00 AM pickup)", "Afternoon (12:30 PM pickup)"], "highlights": ["Feed elephants", "Mud baths with elephants", "Walk through nature", "Lunch included", "English speaking guide", "Hotel pick up & drop off"]}, {"id": "elephant-waterfall", "img": "page05.jpg", "title": "Elephants & Sticky Waterfall", "tagline": "Giants & Waterfalls", "duration": "Full Day", "price": 1700, "kid_price": 1100, "slots": ["Full Day (8:00 AM pickup)"], "highlights": ["Feed elephants", "Mud baths with elephants", "Walk & climb the cascading Sticky Waterfall", "Lunch included", "English speaking guide", "Hotel pick up & drop off"]}, {"id": "chiang-rai", "img": "page06.jpg", "title": "Chiang Rai \u2014 White Temple", "tagline": "White Temple, Blue Temple, Black Museum & Hot Springs", "duration": "Full Day", "price": 1500, "kid_price": 1200, "slots": ["Full Day (7:00 AM pickup)"], "highlights": ["Visit the Hot Springs on the way", "Famous White Temple", "Visit the Blue Temple", "Tour inside the Black Museum", "Lunch included", "English speaking guide", "Hotel pickup & drop off"]}, {"id": "chiang-rai-full", "img": "page07.jpg", "title": "Full Chiang Rai", "tagline": "Temples, Karen Village, Boat Ride & Golden Triangle", "duration": "Full Day", "price": 2000, "kid_price": 1550, "slots": ["Full Day (7:00 AM pickup)"], "highlights": ["White Temple", "Black Museum", "Blue Temple", "Karen Village", "Boat ride", "Hot Springs", "Golden Triangle", "Lunch included", "English speaking guide", "Hotel pickup & drop off"]}, {"id": "doi-suthep", "img": "page08.jpg", "title": "Doi Suthep & Hmong Village", "tagline": "Sacred temple & mountain viewpoint", "duration": "Half Day", "price": 1200, "kid_price": 850, "slots": ["Morning (8:00 - 8:30 AM pickup)"], "highlights": ["Visit Wat Phra That Temple", "Doi Suthep Viewpoint", "Experience Hmong Village", "English speaking guide", "Hotel pickup & drop off"]}, {"id": "doi-inthanon", "img": "page09.jpg", "title": "Doi Inthanon National Park", "tagline": "Visit Thailand's Highest Peak", "duration": "Full Day", "price": 1500, "kid_price": 1100, "slots": ["Full Day (8:00 AM pickup)"], "highlights": ["Explore lush mountain landscapes", "Trek Kew Mae Pan nature trail & 2 Waterfalls", "Scenic King & Queen's Pagoda viewpoints", "Traditional Hmong Village", "Lunch included", "English speaking guide", "Hotel pickup & drop off"]}, {"id": "sacred-3-temples", "img": "page10.jpg", "title": "Sacred Journey \u2014 3 Temples", "tagline": "Monk blessings & cultural insights", "duration": "Half Day", "price": 1990, "kid_price": null, "slots": ["Morning", "Afternoon"], "highlights": ["Visit 3 Famous Temples", "Monk Blessing Experience", "Stories & Cultural Insights", "Temple Offerings Included", "English Guided Tour"]}, {"id": "five-temples", "img": "page11.jpg", "title": "5 Temples Blessings", "tagline": "Love \u00b7 Health \u00b7 Wealth \u00b7 Career", "duration": "Half Day", "price": 3490, "kid_price": null, "slots": ["Morning", "Afternoon"], "highlights": ["Visit 5 Famous Temples in the Old Town", "Monk Blessing Experience", "Historical & Cultural Insights", "Temple Offerings Included", "English Guided Tour", "Lunch Included", "Hidden Local Stops", "Complimentary Spiritual Souvenir"]}, {"id": "bamboo-rafting", "img": "page12.jpg", "title": "Bamboo Rafting & Elephants", "tagline": "Trekking, waterfall & water rafting", "duration": "Full Day", "price": 1800, "kid_price": 1300, "slots": ["Full Day (8:00 AM pickup)"], "highlights": ["Bamboo water rafting", "Feed elephants", "Mud baths with elephants", "Jungle trekking with waterfall", "Lunch included", "English speaking guide", "Hotel pick up & drop off"]}, {"id": "full-day-nature", "img": "page13.jpg", "title": "Full Day Nature", "tagline": "Rafting, Sticky Waterfall & Elephants", "duration": "Full Day", "price": 2000, "kid_price": 1300, "slots": ["Full Day (8:00 AM pickup)"], "highlights": ["Bamboo water rafting", "Feed elephants", "Mud baths with elephants", "Sticky Waterfall view & climb", "Lunch included", "English speaking guide", "Hotel pick up & drop off"]}, {"id": "cooking-class", "img": "page14.jpg", "title": "Thai Cooking Class", "tagline": "Learn authentic recipes", "duration": "Half Day", "price": 900, "kid_price": null, "slots": ["Morning", "Afternoon"], "highlights": ["Explore local market", "Pick fresh ingredients from organic farm", "Cook 4 authentic Thai dishes", "Enjoy your creations"]}, {"id": "sip-thailand", "img": "page15.jpg", "title": "Sip Thailand \u2014 Wine Experience", "tagline": "Five wines & five curated Thai pairings", "duration": "~2 Hours", "price": 3500, "kid_price": null, "slots": ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM"], "highlights": ["5 selected wines", "5 signature Thai bites", "Guided pairing experience", "Complimentary transport"]}, {"id": "cocktail-experience", "img": "page16.jpg", "title": "Cocktail Experience", "tagline": "Shake \u00b7 Sip \u00b7 Create \u2014 hands-on mixology", "duration": "45 - 90 mins", "price": 1490, "kid_price": null, "slots": ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM"], "highlights": ["Welcome drink on arrival", "Learn classic cocktails", "Create your own signature cocktail", "10% off drinks after class", "Group photos & videos", "All equipment & ingredients provided"]}];
+let cur = null;
+function openBook(id){
+  cur = TOURS.find(t=>t.id===id);
+  document.getElementById('m-title').textContent = 'Book: '+cur.title;
+  document.getElementById('m-sub').textContent = cur.duration+' · '+cur.price.toLocaleString()+' THB per adult';
+  const sel = document.getElementById('f-slot'); sel.innerHTML='';
+  cur.slots.forEach(s=>{const o=document.createElement('option');o.textContent=s;o.value=s;sel.appendChild(o);});
+  ['name','email','phone','notes'].forEach(f=>document.getElementById('f-'+f).value='');
+  document.getElementById('f-adults').value=1; document.getElementById('f-children').value=0;
+  document.getElementById('f-date').value='';
+  document.getElementById('f-date').min=new Date().toISOString().split('T')[0];
+  document.getElementById('f-err').style.display='none';
+  document.getElementById('form-wrap').style.display='block';
+  document.getElementById('done').style.display='none';
+  updTotal();
+  document.getElementById('modal').classList.add('open');
+}
+function closeBook(){document.getElementById('modal').classList.remove('open');}
+function updTotal(){
+  if(!cur) return;
+  const a=+document.getElementById('f-adults').value||0;
+  const c=+document.getElementById('f-children').value||0;
+  const kp = cur.kid_price!=null?cur.kid_price:cur.price;
+  const tot=a*cur.price+c*kp;
+  document.getElementById('f-total').textContent=tot.toLocaleString()+' THB';
+}
+['f-adults','f-children'].forEach(id=>document.getElementById(id).addEventListener('input',updTotal));
+async function submitBook(){
+  const err=document.getElementById('f-err');
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const date=document.getElementById('f-date').value;
+  if(!name||!email.includes('@')){err.textContent='Please enter your name and a valid email.';err.style.display='block';return;}
+  if(!date){err.textContent='Please choose a tour date.';err.style.display='block';return;}
+  const payload={tour_id:cur.id,name,email,phone:document.getElementById('f-phone').value,
+    date,slot:document.getElementById('f-slot').value,
+    adults:document.getElementById('f-adults').value,children:document.getElementById('f-children').value,
+    notes:document.getElementById('f-notes').value};
+  let j;
+  try{
+    const r=await fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    j=await r.json();
+  }catch(e){err.textContent='Could not reach the server.';err.style.display='block';return;}
+  if(!j.ok){err.textContent=j.error||'Something went wrong.';err.style.display='block';return;}
+  const msg = j.email_status==='sent'
+     ? 'Confirmation sent to '+email+'. Total ≈ '+j.total.toLocaleString()+' THB. Ref '+j.booking_id
+     : 'Reference '+j.booking_id+' · Total ≈ '+j.total.toLocaleString()+' THB. We will email you shortly.';
+  document.getElementById('done-msg').textContent=msg;
+  document.getElementById('form-wrap').style.display='none';
+  document.getElementById('done').style.display='block';
+}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeBook();});
+</script>
+</body></html>
