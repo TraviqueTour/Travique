@@ -78,6 +78,10 @@ def process(data):
         "children": children,
         "total": total,
         "notes": notes,
+        # --- NEW: pass the pick-up choice through to the Apps Script ---
+        "pickup": (data.get("pickup") or "").strip(),
+        "pickup_detail": (data.get("pickup_detail") or "").strip(),
+        "method": (data.get("method") or "").strip(),
     }
 
     email_status = "not saved (webhook not set)"
